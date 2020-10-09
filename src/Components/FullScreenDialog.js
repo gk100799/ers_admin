@@ -42,7 +42,9 @@ function FullScreenDialog(props) {
                         </Button>
                     </Toolbar>
                 </AppBar>
-                {props.DialogContent}
+                <div className="full-screen-dialog-content">
+                    {props.DialogContent}
+                </div>
             </Dialog>
         </div>
     )

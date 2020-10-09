@@ -24,6 +24,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
+import Question from './Question'
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -50,10 +51,6 @@ const rows = [
     createData(356, 'Gingerbread', 16.0, 49, 'ISE', 3.9),
 ];
 
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="up" ref={ref} {...props} />;
-});
-
 export default function ManageSurvey(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -61,50 +58,84 @@ export default function ManageSurvey(props) {
     const [childProps, setChildProps] = React.useState()
     const [fullDialogProps, setFullDialogProps] = React.useState()
 
-    const handleEdit = (eventId) => {
-        // props.history.push(`/survey/${eventId}`)
-        setFullDialogProps({
-            handleFullClose,
-            DialogContent:
-                <List>
-                    <ListItem button>
-                        <ListItemText primary="Phone ringtone" secondary="Titania" />
-                    </ListItem>
-                    <Divider />
-                    <ListItem button>
-                        <ListItemText primary="Default notification ringtone" secondary="Tethys" />
-                    </ListItem>
-                </List>,
-            close: "Close",
-            title: 'Add / Edit Survey',
-            eventId,
-        })
-        setFullOpen(true);
-    }
-
-    const handleClose = () => {
-        setOpen(false);
-    };
-    const handleFullClose = () => {
-        setFullOpen(false);
-    };
-
-    const handleDeleteConfirm = () => {
-        setOpen(false);
-    }
-
-    const handleDelete = (eventId) => {
-        console.log(eventId)
+    const handleAddQuestion = () => {
         setChildProps({
             handleClose,
             DialogContent: <DialogContentText id="alert-dialog-description">
-                Deleting this will delete the Survey questions associated with this event. Are you sure you want to delete this event?",
+                Add question please
                             </DialogContentText>,
             buttons: [<Button onClick={handleClose} color="primary">
                 Cancel
                     </Button>,
             <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
-                Confirm
+                Save
+                    </Button>],
+            dividers: true,
+            title: 'Add question',
+        })
+        setOpen(true)
+    }
+
+    const handleEdit = (eventId) => {
+        // props.history.push(`/survey/${eventId}`)
+        setFullDialogProps({
+            handleFullClose,
+            DialogContent:
+                    <>
+                    <Button variant="contained" color="primary" style={{ marginBottom: "12px" }} onClick={handleAddQuestion}>Add Question</Button>
+                    <div className="questions-container">
+                        <Question
+                            question="How was the event ?"
+                            options={["It was good", "It was moderate", "It was not so good"]}
+                        />
+                        <Question
+                            question="How was the event ?"
+                            options={["It was good", "It was moderate", "It was not so good", "Not good at all"]}
+                        />
+                        <Question
+                            question="How was the event ?"
+                            options={["It was good", "It was moderate", "It was not so good"]}
+                        />
+                        <Question
+                            question="How was the event ?"
+                            options={["It was good", "It was moderate", "It was not so good"]}
+                        />
+                        <Question
+                            question="How was the event ?"
+                            options={["It was good", "It was moderate", "It was not so good"]}
+                        />
+                    </div>
+                </>,
+                    close: "Close",
+                    title: eventId,
+                    eventId,
+                    })
+                    setFullOpen(true);
+                    }
+
+    const handleClose = () => {
+                            setOpen(false);
+    };
+    const handleFullClose = () => {
+                            setFullOpen(false);
+    };
+
+    const handleDeleteConfirm = () => {
+                            setOpen(false);
+    }
+
+    const handleDelete = (eventId) => {
+                            console.log(eventId)
+        setChildProps({
+                            handleClose,
+                            DialogContent: <DialogContentText id="alert-dialog-description">
+                            Deleting this will delete the Survey questions associated with this event. Are you sure you want to delete this event?
+                            </DialogContentText>,
+            buttons: [<Button onClick={handleClose} color="primary">
+                            Cancel
+                    </Button>,
+                        <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
+                            Confirm
                     </Button>],
             dividers: false,
             title: 'Confirm Delete',
@@ -114,47 +145,47 @@ export default function ManageSurvey(props) {
     }
 
     return (
-        <div>
-            <Toolbar />
-            <MaterialDialog open={open} {...childProps} />
-            <FullScreenDialog open={fullOpen} handleClose={handleFullClose} {...fullDialogProps} />
-            <div className="main-title">
-                Manage Survey
+                        <div>
+                            <Toolbar />
+                            <MaterialDialog open={open} {...childProps} />
+                            <FullScreenDialog open={fullOpen} handleClose={handleFullClose} {...fullDialogProps} />
+                            <div className="main-title">
+                                Manage Survey
             </div>
-            <TableContainer component={Paper}>
-                <Table className={classes.table} size="small" aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Event Name</TableCell>
-                            <TableCell align="center">Created On</TableCell>
-                            <TableCell align="center">Add / Edit Survey</TableCell>
-                            <TableCell align="center">Delete Survey</TableCell>
-                            {/* <TableCell align="center">Branch</TableCell> */}
-                            {/* <TableCell align="center">Registered On</TableCell> */}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.name}>
-                                <TableCell component="th" scope="row">
-                                    {row.name}
-                                </TableCell>
-                                <TableCell align="center">{row.usn}</TableCell>
-                                <TableCell align="center">
-                                    <IconButton color="primary" onClick={(e) => handleEdit(row.name)} >
-                                        <EditIcon />
-                                    </IconButton>
-                                </TableCell>
-                                <TableCell align="center">
-                                    <IconButton className="icons" color="primary" aria-label="delete button" component="span" onClick={(e) => handleDelete(row.name)}>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </div>
+                            <TableContainer component={Paper}>
+                                <Table className={classes.table} size="small" aria-label="simple table">
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>Event Name</TableCell>
+                                            <TableCell align="center">Created On</TableCell>
+                                            <TableCell align="center">Add / Edit Survey</TableCell>
+                                            <TableCell align="center">Delete Survey</TableCell>
+                                            {/* <TableCell align="center">Branch</TableCell> */}
+                                            {/* <TableCell align="center">Registered On</TableCell> */}
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {rows.map((row) => (
+                                            <TableRow key={row.name}>
+                                                <TableCell component="th" scope="row">
+                                                    {row.name}
+                                                </TableCell>
+                                                <TableCell align="center">{row.usn}</TableCell>
+                                                <TableCell align="center">
+                                                    <IconButton color="primary" onClick={(e) => handleEdit(row.name)} >
+                                                        <EditIcon />
+                                                    </IconButton>
+                                                </TableCell>
+                                                <TableCell align="center">
+                                                    <IconButton className="icons" color="primary" aria-label="delete button" component="span" onClick={(e) => handleDelete(row.name)}>
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </div>
     );
 }
