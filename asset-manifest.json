@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/ers_admin/static/css/main.c67eaa3b.chunk.css",
-    "main.js": "/ers_admin/static/js/main.021e7ef2.chunk.js",
-    "main.js.map": "/ers_admin/static/js/main.021e7ef2.chunk.js.map",
+    "main.js": "/ers_admin/static/js/main.031d5c93.chunk.js",
+    "main.js.map": "/ers_admin/static/js/main.031d5c93.chunk.js.map",
     "runtime-main.js": "/ers_admin/static/js/runtime-main.90f40fa6.js",
     "runtime-main.js.map": "/ers_admin/static/js/runtime-main.90f40fa6.js.map",
     "static/js/2.288a3a94.chunk.js": "/ers_admin/static/js/2.288a3a94.chunk.js",
     "static/js/2.288a3a94.chunk.js.map": "/ers_admin/static/js/2.288a3a94.chunk.js.map",
     "index.html": "/ers_admin/index.html",
-    "precache-manifest.5e7287cb730580b828812449be89babc.js": "/ers_admin/precache-manifest.5e7287cb730580b828812449be89babc.js",
+    "precache-manifest.819d59af045710938fa27d29afe19fbc.js": "/ers_admin/precache-manifest.819d59af045710938fa27d29afe19fbc.js",
     "service-worker.js": "/ers_admin/service-worker.js",
     "static/css/main.c67eaa3b.chunk.css.map": "/ers_admin/static/css/main.c67eaa3b.chunk.css.map",
     "static/js/2.288a3a94.chunk.js.LICENSE.txt": "/ers_admin/static/js/2.288a3a94.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.90f40fa6.js",
     "static/js/2.288a3a94.chunk.js",
     "static/css/main.c67eaa3b.chunk.css",
-    "static/js/main.021e7ef2.chunk.js"
+    "static/js/main.031d5c93.chunk.js"
   ]
 }
