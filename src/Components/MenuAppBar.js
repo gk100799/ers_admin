@@ -11,7 +11,7 @@ import ManageSurvey from './ManageSurvey'
 import ManageStudents from './ManageStudents'
 import SurveyResults from './SurveyResults'
 import SurveyDetails from './SurveyDetails'
-
+import SurveyQuestions from './SurveyQuestions'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -187,11 +187,12 @@ export default function MenuAppBar(props) {
                 </Drawer>
                 <main className={classes.content}>
                     <Route exact path="/" component={ManageEvents} />
-                    <Route path="/survey" component={ManageSurvey} />
-                    <Route path="/survey-result" component={SurveyResults} />
-                    <Route path="/students" component={ManageStudents} />
-                    <Route path="/survey-details" component={SurveyDetails} />
-                    {/* <Route path="/profile" component={Profie} /> */}
+                    <Route exact path="/survey/:eventId" component={SurveyQuestions} />
+                    <Route exact path="/survey" component={ManageSurvey} />
+                    <Route exact path="/survey-result" component={SurveyResults} />
+                    <Route exact path="/students" component={ManageStudents} />
+                    <Route exact path="/survey-details" component={SurveyDetails} />
+                    {/* <Route exact path="/profile" component={Profie} /> */}
                 </main>
             </Router>
         </div>

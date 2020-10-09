@@ -70,8 +70,8 @@ export default function MaterialTable(props) {
         setOpen(false);
     };
 
-    const handleDelete = (e) => {
-        console.log(e.target.getAttribute('eventId'))
+    const handleDelete = (eventId) => {
+        console.log(eventId)
         setChildProps({
             handleClose,
             DialogContent: <DialogContentText id="alert-dialog-description">
@@ -85,13 +85,13 @@ export default function MaterialTable(props) {
                     </Button>],
             dividers: false,
             title:'Confirm Delete',
-            eventId: e.target.getAttribute('eventId'),
+            eventId,
         })
         setOpen(true);
     }
 
-    const handleEdit = (e) => {
-        console.log(e.target.getAttribute('eventId'))
+    const handleEdit = (eventId) => {
+        console.log(eventId)
         setChildProps({
             // ...childProps,
             handleClose,
@@ -104,7 +104,7 @@ export default function MaterialTable(props) {
                     </Button>],
             dividers: true,
             title:'Edit Event',
-            eventId: e.target.getAttribute('eventId'),
+            eventId,
         })
         setOpen(true);
     }
@@ -139,7 +139,7 @@ export default function MaterialTable(props) {
         setOpen(false);
     }
 
-    const handleViewParticipation = () => {
+    const handleViewParticipation = (eventId) => {
         setChildProps({
             // ...childProps,
             handleClose,
@@ -150,6 +150,7 @@ export default function MaterialTable(props) {
             dividers: true,
             title:'Registered Students',
             participants: true,
+            eventId,
         })
         setOpen(true);
     }
@@ -176,15 +177,15 @@ export default function MaterialTable(props) {
                                 <TableCell align="center">{row.calories}</TableCell>
                                 <TableCell align="center">
                                     <div className="action-cell">
-                                        <IconButton className="edit-button icons" color="primary" aria-label="edit button" component="span" eventId={row.name} onClick={(e) => handleEdit(e)}>
+                                        <IconButton className="edit-button icons" color="primary" aria-label="edit button" component="span" onClick={(e) => handleEdit(row.name)}>
                                             <EditIcon />
                                         </IconButton>
-                                        <IconButton className="icons" color="primary" aria-label="delete button" component="span" eventId={row.name} onClick={(e) => handleDelete(e)}>
-                                            <DeleteIcon />
+                                        <IconButton className="icons" color="primary" aria-label="delete button" component="span" onClick={(e) => handleDelete(row.name)}>
+                                            <DeleteIcon/>
                                         </IconButton>
                                     </div>
                                 </TableCell>
-                                <TableCell align="center"><Button variant="contained" color="primary" onClick={handleViewParticipation}>View Participants</Button></TableCell>
+                                <TableCell align="center"><Button variant="contained" color="primary" onClick={() => handleViewParticipation(row.name)}>View Participants</Button></TableCell>
                                 {/* <TableCell align="right">{row.protein}</TableCell> */}
                             </TableRow>
                         ))}

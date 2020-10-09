@@ -12,12 +12,31 @@ import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 import PostAddIcon from '@material-ui/icons/PostAdd';
+import DialogContentText from '@material-ui/core/DialogContentText'
+import MaterialDialog from './MaterialDialog'
+import Button from '@material-ui/core/Button';
+import Slide from '@material-ui/core/Slide';
+import CloseIcon from '@material-ui/icons/Close';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import FullScreenDialog from './FullScreenDialog'
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
     table: {
         minWidth: 650,
     },
-});
+    appBar: {
+        position: 'relative',
+    },
+    title: {
+        marginLeft: theme.spacing(2),
+        flex: 1,
+    },
+}));
 
 function createData(usn, name, email, phone, branch, registered) {
     return { usn, name, email, phone, branch, registered };
@@ -31,24 +50,74 @@ const rows = [
     createData(356, 'Gingerbread', 16.0, 49, 'ISE', 3.9),
 ];
 
-export default function ManageSurvey() {
+const Transition = React.forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+});
+
+export default function ManageSurvey(props) {
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const [fullOpen, setFullOpen] = React.useState(false);
+    const [childProps, setChildProps] = React.useState()
+    const [fullDialogProps, setFullDialogProps] = React.useState()
 
-    const handleEdit = () => {
-        
+    const handleEdit = (eventId) => {
+        // props.history.push(`/survey/${eventId}`)
+        setFullDialogProps({
+            handleFullClose,
+            DialogContent:
+                <List>
+                    <ListItem button>
+                        <ListItemText primary="Phone ringtone" secondary="Titania" />
+                    </ListItem>
+                    <Divider />
+                    <ListItem button>
+                        <ListItemText primary="Default notification ringtone" secondary="Tethys" />
+                    </ListItem>
+                </List>,
+            close: "Close",
+            title: 'Add / Edit Survey',
+            eventId,
+        })
+        setFullOpen(true);
     }
 
-    const handleDelete = () => {
-        
+    const handleClose = () => {
+        setOpen(false);
+    };
+    const handleFullClose = () => {
+        setFullOpen(false);
+    };
+
+    const handleDeleteConfirm = () => {
+        setOpen(false);
     }
 
-    const handleAdd = () => {
-        
+    const handleDelete = (eventId) => {
+        console.log(eventId)
+        setChildProps({
+            handleClose,
+            DialogContent: <DialogContentText id="alert-dialog-description">
+                Deleting this will delete the Survey questions associated with this event. Are you sure you want to delete this event?",
+                            </DialogContentText>,
+            buttons: [<Button onClick={handleClose} color="primary">
+                Cancel
+                    </Button>,
+            <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
+                Confirm
+                    </Button>],
+            dividers: false,
+            title: 'Confirm Delete',
+            eventId,
+        })
+        setOpen(true);
     }
 
     return (
         <div>
             <Toolbar />
+            <MaterialDialog open={open} {...childProps} />
+            <FullScreenDialog open={fullOpen} handleClose={handleFullClose} {...fullDialogProps} />
             <div className="main-title">
                 Manage Survey
             </div>
@@ -72,17 +141,12 @@ export default function ManageSurvey() {
                                 </TableCell>
                                 <TableCell align="center">{row.usn}</TableCell>
                                 <TableCell align="center">
-                                    <div className="action-cell">
-                                        <IconButton className="edit-button icons" color="primary" aria-label="edit button" component="span" eventId={row.name} onClick={(e) => handleEdit(e)}>
-                                            <EditIcon />
-                                        </IconButton>
-                                        <IconButton className="icons" color="primary" aria-label="delete button" component="span" eventId={row.name} onClick={(e) => handleAdd(e)}>
-                                            <PostAddIcon />
-                                        </IconButton>
-                                    </div>
+                                    <IconButton color="primary" onClick={(e) => handleEdit(row.name)} >
+                                        <EditIcon />
+                                    </IconButton>
                                 </TableCell>
                                 <TableCell align="center">
-                                    <IconButton className="icons" color="primary" aria-label="delete button" component="span" eventId={row.name} onClick={(e) => handleDelete(e)}>
+                                    <IconButton className="icons" color="primary" aria-label="delete button" component="span" onClick={(e) => handleDelete(row.name)}>
                                         <DeleteIcon />
                                     </IconButton>
                                 </TableCell>
