@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react';
-import { Router, Route, Link } from "react-router-dom";
+//production
+// import { HashRouter as Router, Route, Link } from "react-router-dom";
+//dev
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
 import './UI.css'
@@ -7,6 +10,7 @@ import ManageEvents from './ManageEvents'
 import ManageSurvey from './ManageSurvey'
 import ManageStudents from './ManageStudents'
 import SurveyResults from './SurveyResults'
+import SurveyDetails from './SurveyDetails'
 
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -69,8 +73,11 @@ export default function MenuAppBar(props) {
     const open = Boolean(anchorEl);
 
     useEffect(() => {
-        switch(history.location.pathname) {
-            case '/':
+        // dev
+        switch (history.location.pathname) {
+        // produciton
+        // switch (history.location.hash) {
+        case '/':
                 setTitle(1)
                 break
             case '/survey':
@@ -156,22 +163,22 @@ export default function MenuAppBar(props) {
                     <Toolbar />
                     <div className={classes.drawerContainer}>
                         <List>
-                            <ListItem selected={title === 1 ? true : false} button key="Manage Events" component={Link} to="/" onClick={() => onItemClick('Manage Events')}>
+                            <ListItem selected={title === 1 ? true : false} button key="Manage Events" component={Link} to="/" onClick={() => onItemClick(1)}>
                                 <ListItemIcon><EventIcon /></ListItemIcon>
                                 <ListItemText primary="Manage Events" />
                             </ListItem>
-                            <ListItem selected={title === 2 ? true : false} button key="Manage Survey" component={Link} to="/survey" onClick={() => onItemClick('Manage Survey')}>
+                            <ListItem selected={title === 2 ? true : false} button key="Manage Survey" component={Link} to="/survey" onClick={() => onItemClick(2)}>
                                 <ListItemIcon><AssignmentIcon /></ListItemIcon>
                                 <ListItemText primary="Manage Survey" />
                             </ListItem>
-                            <ListItem selected={title === 3 ? true : false} button key="Survey Results" component={Link} to="/survey-result" onClick={() => onItemClick('Survey Results')}>
+                            <ListItem selected={title === 3 ? true : false} button key="Survey Results" component={Link} to="/survey-result" onClick={() => onItemClick(3)}>
                                 <ListItemIcon><NoteIcon /></ListItemIcon>
                                 <ListItemText primary="Survey Results" />
                             </ListItem>
                         </List>
                         <Divider />
                         <List>
-                            <ListItem selected={title === 4 ? true : false} button key="Manage Students" component={Link} to="/students" onClick={() => onItemClick('Manage Students')}>
+                            <ListItem selected={title === 4 ? true : false} button key="Manage Students" component={Link} to="/students" onClick={() => onItemClick(4)}>
                                 <ListItemIcon><PersonIcon /></ListItemIcon>
                                 <ListItemText primary="Manage Students" />
                             </ListItem>
@@ -183,35 +190,10 @@ export default function MenuAppBar(props) {
                     <Route path="/survey" component={ManageSurvey} />
                     <Route path="/survey-result" component={SurveyResults} />
                     <Route path="/students" component={ManageStudents} />
+                    <Route path="/survey-details" component={SurveyDetails} />
                     {/* <Route path="/profile" component={Profie} /> */}
                 </main>
             </Router>
-            {/* <main className={classes.content}>
-                <Toolbar />
-                <Typography paragraph>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                    ut labore et dolore magna aliqua. Rhoncus dolor purus non enim praesent elementum
-                    facilisis leo vel. Risus at ultrices mi tempus imperdiet. Semper risus in hendrerit
-                    gravida rutrum quisque non tellus. Convallis convallis tellus id interdum velit laoreet id
-                    donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-                    adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras.
-                    Metus vulputate eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis
-                    imperdiet massa tincidunt. Cras tincidunt lobortis feugiat vivamus at augue. At augue eget
-                    arcu dictum varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt. Lorem
-                    donec massa sapien faucibus et molestie ac.
-                </Typography>
-                <Typography paragraph>
-                    Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla
-                    facilisi etiam dignissim diam. Pulvinar elementum integer enim neque volutpat ac
-                    tincidunt. Ornare suspendisse sed nisi lacus sed viverra tellus. Purus sit amet volutpat
-                    consequat mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-                    vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In
-                    hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et
-                    tortor. Habitant morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin
-                    nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas
-                    accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
-                </Typography>
-            </main> */}
         </div>
     );
 }
