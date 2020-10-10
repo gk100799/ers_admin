@@ -25,6 +25,7 @@ import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import Question from './Question'
+import AddQuestionContent from './AddQuestionContent'
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -57,21 +58,25 @@ export default function ManageSurvey(props) {
     const [fullOpen, setFullOpen] = React.useState(false);
     const [childProps, setChildProps] = React.useState()
     const [fullDialogProps, setFullDialogProps] = React.useState()
+    const [footer, setFooter] = React.useState()
 
     const handleAddQuestion = () => {
         setChildProps({
             handleClose,
             DialogContent: <DialogContentText id="alert-dialog-description">
-                Add question please
-                            </DialogContentText>,
+                <AddQuestionContent setFooter />
+            </DialogContentText>,
             buttons: [<Button onClick={handleClose} color="primary">
                 Cancel
                     </Button>,
             <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
                 Save
-                    </Button>],
+            </Button>],
             dividers: true,
             title: 'Add question',
+            maxWidth: "sm",
+            fullWidth: true,
+            noFooter: true,
         })
         setOpen(true)
     }
@@ -81,111 +86,152 @@ export default function ManageSurvey(props) {
         setFullDialogProps({
             handleFullClose,
             DialogContent:
-                    <>
+                <>
                     <Button variant="contained" color="primary" style={{ marginBottom: "12px" }} onClick={handleAddQuestion}>Add Question</Button>
                     <div className="questions-container">
                         <Question
                             question="How was the event ?"
                             options={["It was good", "It was moderate", "It was not so good"]}
+                            handleQuestionDelete={handleQuestionDelete}
+                            handleQuestionEdit={handleQuestionEdit}
                         />
                         <Question
                             question="How was the event ?"
                             options={["It was good", "It was moderate", "It was not so good", "Not good at all"]}
+                            handleQuestionDelete={handleQuestionDelete}
+                            handleQuestionEdit={handleQuestionEdit}
                         />
                         <Question
                             question="How was the event ?"
                             options={["It was good", "It was moderate", "It was not so good"]}
+                            handleQuestionDelete={handleQuestionDelete}
+                            handleQuestionEdit={handleQuestionEdit}
                         />
                         <Question
                             question="How was the event ?"
                             options={["It was good", "It was moderate", "It was not so good"]}
+                            handleQuestionDelete={handleQuestionDelete}
+                            handleQuestionEdit={handleQuestionEdit}
                         />
                         <Question
                             question="How was the event ?"
                             options={["It was good", "It was moderate", "It was not so good"]}
+                            handleQuestionDelete={handleQuestionDelete}
+                            handleQuestionEdit={handleQuestionEdit}
                         />
                     </div>
                 </>,
-                    close: "Close",
-                    title: eventId,
-                    eventId,
-                    })
-                    setFullOpen(true);
-                    }
+            close: "Close",
+            title: eventId,
+            eventId,
+        })
+        setFullOpen(true);
+    }
 
+    const handleQuestionDelete = (eventId) => {
+
+    }
+
+    const handleQuestionEdit = (eventId) => {
+        const ques = {
+            question:"How was the event ?",
+            options: ["It was good", "It was moderate", "It was not so good"]
+            // options:[]
+        }
+            
+        setChildProps({
+            handleClose,
+            DialogContent: <DialogContentText id="alert-dialog-description">
+                                <AddQuestionContent setFooter ques={ques} />
+                            </DialogContentText>,
+            buttons: [<Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>,
+            <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
+                Save
+            </Button>],
+            dividers: true,
+            title: 'Add question',
+            maxWidth: "sm",
+            fullWidth: true,
+            noFooter: true,
+        })
+        setOpen(true)
+    }
     const handleClose = () => {
-                            setOpen(false);
+        setOpen(false);
     };
     const handleFullClose = () => {
-                            setFullOpen(false);
+        setFullOpen(false);
     };
 
     const handleDeleteConfirm = () => {
-                            setOpen(false);
+        setOpen(false);
     }
 
     const handleDelete = (eventId) => {
-                            console.log(eventId)
+        console.log(eventId)
         setChildProps({
-                            handleClose,
-                            DialogContent: <DialogContentText id="alert-dialog-description">
-                            Deleting this will delete the Survey questions associated with this event. Are you sure you want to delete this event?
+            handleClose,
+            DialogContent: <DialogContentText id="alert-dialog-description">
+                Deleting this will delete the Survey questions associated with this event. Are you sure you want to delete this event?
                             </DialogContentText>,
             buttons: [<Button onClick={handleClose} color="primary">
-                            Cancel
+                Cancel
                     </Button>,
-                        <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
-                            Confirm
+            <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
+                Confirm
                     </Button>],
             dividers: false,
             title: 'Confirm Delete',
             eventId,
+            maxWidth: "sm",
         })
         setOpen(true);
     }
 
     return (
-                        <div>
-                            <Toolbar />
-                            <MaterialDialog open={open} {...childProps} />
-                            <FullScreenDialog open={fullOpen} handleClose={handleFullClose} {...fullDialogProps} />
-                            <div className="main-title">
-                                Manage Survey
+        <div>
+            <Toolbar />
+            <MaterialDialog open={open} {...childProps} />
+            <FullScreenDialog open={fullOpen} handleClose={handleFullClose} {...fullDialogProps} />
+            <div className="main-title">
+                Manage Survey
             </div>
-                            <TableContainer component={Paper}>
-                                <Table className={classes.table} size="small" aria-label="simple table">
-                                    <TableHead>
-                                        <TableRow>
-                                            <TableCell>Event Name</TableCell>
-                                            <TableCell align="center">Created On</TableCell>
-                                            <TableCell align="center">Add / Edit Survey</TableCell>
-                                            <TableCell align="center">Delete Survey</TableCell>
-                                            {/* <TableCell align="center">Branch</TableCell> */}
-                                            {/* <TableCell align="center">Registered On</TableCell> */}
-                                        </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {rows.map((row) => (
-                                            <TableRow key={row.name}>
-                                                <TableCell component="th" scope="row">
-                                                    {row.name}
-                                                </TableCell>
-                                                <TableCell align="center">{row.usn}</TableCell>
-                                                <TableCell align="center">
-                                                    <IconButton color="primary" onClick={(e) => handleEdit(row.name)} >
-                                                        <EditIcon />
-                                                    </IconButton>
-                                                </TableCell>
-                                                <TableCell align="center">
-                                                    <IconButton className="icons" color="primary" aria-label="delete button" component="span" onClick={(e) => handleDelete(row.name)}>
-                                                        <DeleteIcon />
-                                                    </IconButton>
-                                                </TableCell>
-                                            </TableRow>
-                                        ))}
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                        </div>
+            <TableContainer component={Paper}>
+                <Table className={classes.table} size="small" aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Event Name</TableCell>
+                            <TableCell align="center">Created On</TableCell>
+                            <TableCell align="center">Add / Edit Survey</TableCell>
+                            <TableCell align="center">Delete Survey</TableCell>
+                            {/* <TableCell align="center">Branch</TableCell> */}
+                            {/* <TableCell align="center">Registered On</TableCell> */}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {rows.map((row) => (
+                            <TableRow key={row.name}>
+                                <TableCell component="th" scope="row">
+                                    {row.name}
+                                </TableCell>
+                                <TableCell align="center">{row.usn}</TableCell>
+                                <TableCell align="center">
+                                    <IconButton color="primary" onClick={(e) => handleEdit(row.name)} >
+                                        <EditIcon />
+                                    </IconButton>
+                                </TableCell>
+                                <TableCell align="center">
+                                    <IconButton className="icons" color="primary" aria-label="delete button" component="span" onClick={(e) => handleDelete(row.name)}>
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </div>
     );
 }

@@ -86,6 +86,7 @@ export default function MaterialTable(props) {
             dividers: false,
             title:'Confirm Delete',
             eventId,
+            maxWidth: "sm",
         })
         setOpen(true);
     }
@@ -105,6 +106,7 @@ export default function MaterialTable(props) {
             dividers: true,
             title:'Edit Event',
             eventId,
+            maxWidth: "sm",
         })
         setOpen(true);
     }
@@ -123,6 +125,7 @@ export default function MaterialTable(props) {
                     </Button>],
             dividers: true,
             title:'Add Event',
+            maxWidth: "sm",
         })
         setOpen(true);
     }
@@ -149,7 +152,7 @@ export default function MaterialTable(props) {
                     </Button>],
             dividers: true,
             title:'Registered Students',
-            participants: true,
+            maxWidth: "lg",
             eventId,
         })
         setOpen(true);

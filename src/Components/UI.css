@@ -63,3 +63,47 @@
     justify-content: center;
     align-items: center;
 }
+
+
+.question-hover .MuiIconButton-root:hover {
+    /* background-color: rgb(118 37 144 / 85%) !important; */
+    background-color: #0a2ae0 !important;
+}
+
+.question-hover .MuiIconButton-colorPrimary {
+    color: #3f51b5;
+    background-color: #3f51b5 !important;
+    margin: 10px !important;
+}
+
+.dynamic-delete-button {
+    cursor: pointer;
+    position: relative;
+    top: 4px;
+    font-size: 24px;
+    color: #999;
+    transition: all 0.3s;
+  }
+  .dynamic-delete-button:hover {
+    color: #777;
+  }
+  .dynamic-delete-button[disabled] {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .ant-form-item-label {
+      margin-right: 20px;
+  }
+
+  .antd-input {
+    width: 40%;
+    height: 30px;
+    margin-left: 20px; 
+  }
+
+  .form-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin: 10px 5px -10px 0px
+  }

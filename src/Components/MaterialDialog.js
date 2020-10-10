@@ -81,7 +81,8 @@ function MaterialDialog(props) {
                 onClose={props.handleClose}
                 aria-labelledby="customized-dialog-title"
                 open={props.open}
-                maxWidth={props.participants ? "lg" : "sm"}
+                maxWidth={props.maxWidth}
+                fullWidth={props.fullWidth}
             >
                 <DialogTitle id="customized-dialog-title" onClose={props.handleClose}>
                     {props.title}
@@ -89,11 +90,13 @@ function MaterialDialog(props) {
                 <DialogContent dividers={props.dividers}>
                     {props.DialogContent}
                 </DialogContent>
-                <DialogActions>
-                    {props.buttons && props.buttons.map(button => (
-                        button
-                    ))}
-                </DialogActions>
+                {!props.noFooter &&
+                    <DialogActions>
+                        {props.buttons && props.buttons.map(button => (
+                            button
+                        ))}
+                    </DialogActions>
+                }
             </Dialog>
         </div>
     )
