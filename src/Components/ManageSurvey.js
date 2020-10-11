@@ -90,32 +90,37 @@ export default function ManageSurvey(props) {
                     <Button variant="contained" color="primary" style={{ marginBottom: "12px" }} onClick={handleAddQuestion}>Add Question</Button>
                     <div className="questions-container">
                         <Question
+                            id="1"
                             question="How was the event ?"
                             options={["It was good", "It was moderate", "It was not so good"]}
                             handleQuestionDelete={handleQuestionDelete}
                             handleQuestionEdit={handleQuestionEdit}
                         />
                         <Question
+                            id="2"
+                            question="How was the event ?"
+                            options={["It was good", "It was moderate", "It was not so good"]}
+                            handleQuestionDelete={handleQuestionDelete}
+                            handleQuestionEdit={handleQuestionEdit}
+                        />
+                        <Question
+                            id="3"
+                            question="How was the event ?"
+                            options={["It was good", "It was moderate", "It was not so good"]}
+                            handleQuestionDelete={handleQuestionDelete}
+                            handleQuestionEdit={handleQuestionEdit}
+                        />
+                        <Question
+                            id="4"
+                            question="How was the event ?"
+                            options={["It was good", "It was moderate", "It was not so good"]}
+                            handleQuestionDelete={handleQuestionDelete}
+                            handleQuestionEdit={handleQuestionEdit}
+                        />
+                        <Question
+                            id="5"
                             question="How was the event ?"
                             options={["It was good", "It was moderate", "It was not so good", "Not good at all"]}
-                            handleQuestionDelete={handleQuestionDelete}
-                            handleQuestionEdit={handleQuestionEdit}
-                        />
-                        <Question
-                            question="How was the event ?"
-                            options={["It was good", "It was moderate", "It was not so good"]}
-                            handleQuestionDelete={handleQuestionDelete}
-                            handleQuestionEdit={handleQuestionEdit}
-                        />
-                        <Question
-                            question="How was the event ?"
-                            options={["It was good", "It was moderate", "It was not so good"]}
-                            handleQuestionDelete={handleQuestionDelete}
-                            handleQuestionEdit={handleQuestionEdit}
-                        />
-                        <Question
-                            question="How was the event ?"
-                            options={["It was good", "It was moderate", "It was not so good"]}
                             handleQuestionDelete={handleQuestionDelete}
                             handleQuestionEdit={handleQuestionEdit}
                         />
@@ -129,27 +134,42 @@ export default function ManageSurvey(props) {
     }
 
     const handleQuestionDelete = (eventId) => {
+        setChildProps({
+            handleClose,
+            DialogContent: <DialogContentText id="alert-dialog-description">
+                Deleting this will remove this Survey question. Are you sure you want to delete this question?
+                            </DialogContentText>,
+            buttons: [<Button onClick={handleClose} color="primary">
+                Cancel
+                    </Button>,
+            <Button onClick={() => handleQuestionDeleteConfirm(eventId)} color="primary" autoFocus>
+                Confirm
+                    </Button>],
+            dividers: false,
+            title: 'Confirm Delete',
+            eventId,
+            maxWidth: "sm",
+        })
+        setOpen(true);
+    }
 
+    const handleQuestionDeleteConfirm = (eventId) => {
+        console.log(eventId)
+        setOpen(false)
     }
 
     const handleQuestionEdit = (eventId) => {
         const ques = {
-            question:"How was the event ?",
+            question: "How was the event ?",
             options: ["It was good", "It was moderate", "It was not so good"]
             // options:[]
         }
-            
+
         setChildProps({
             handleClose,
             DialogContent: <DialogContentText id="alert-dialog-description">
-                                <AddQuestionContent setFooter ques={ques} />
-                            </DialogContentText>,
-            buttons: [<Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>,
-            <Button onClick={handleDeleteConfirm} color="primary" autoFocus>
-                Save
-            </Button>],
+                <AddQuestionContent setFooter ques={ques} handleEditSave={handleEditSave} />
+            </DialogContentText>,
             dividers: true,
             title: 'Add question',
             maxWidth: "sm",
@@ -158,9 +178,15 @@ export default function ManageSurvey(props) {
         })
         setOpen(true)
     }
+
+    const handleEditSave = (values) => {
+        console.log(values)
+    }
+
     const handleClose = () => {
         setOpen(false);
     };
+
     const handleFullClose = () => {
         setFullOpen(false);
     };
@@ -174,7 +200,7 @@ export default function ManageSurvey(props) {
         setChildProps({
             handleClose,
             DialogContent: <DialogContentText id="alert-dialog-description">
-                Deleting this will delete the Survey questions associated with this event. Are you sure you want to delete this event?
+                Deleting this will remove all the Survey questions associated with this event. Are you sure you want to delete?
                             </DialogContentText>,
             buttons: [<Button onClick={handleClose} color="primary">
                 Cancel

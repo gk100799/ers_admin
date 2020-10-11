@@ -64,7 +64,6 @@
     align-items: center;
 }
 
-
 .question-hover .MuiIconButton-root:hover {
     /* background-color: rgb(118 37 144 / 85%) !important; */
     background-color: #0a2ae0 !important;
@@ -83,27 +82,55 @@
     font-size: 24px;
     color: #999;
     transition: all 0.3s;
-  }
-  .dynamic-delete-button:hover {
+}
+
+.dynamic-delete-button:hover {
     color: #777;
-  }
-  .dynamic-delete-button[disabled] {
+}
+
+.dynamic-delete-button[disabled] {
     cursor: not-allowed;
     opacity: 0.5;
-  }
+}
 
-  .ant-form-item-label {
-      margin-right: 20px;
-  }
+.ant-form-item-label {
+    margin-right: 20px;
+}
 
-  .antd-input {
+.antd-input {
     width: 40%;
     height: 30px;
-    margin-left: 20px; 
-  }
+    margin-left: 20px;
+}
 
-  .form-footer {
+.form-footer {
     display: flex;
     justify-content: flex-end;
     margin: 10px 5px -10px 0px
-  }
+}
+
+.response-layout-root {
+    border: 0.8px solid black;
+    padding: 5px 20px 2px 20px;
+    background-color: white;
+    border-radius: 8px;
+    height: 100%;
+    display: flex;
+}
+
+.response-layout {
+    flex: 2;
+}
+
+.pie-chart-root {
+    flex: 1;
+    height: 170px;
+    display: flex;
+    align-items: center;
+}
+
+.color-box {
+    height: 10px;
+    width: 15px;
+    margin-right: 7px;
+}

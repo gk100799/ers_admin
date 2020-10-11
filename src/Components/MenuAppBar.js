@@ -12,6 +12,7 @@ import ManageStudents from './ManageStudents'
 import SurveyResults from './SurveyResults'
 import SurveyDetails from './SurveyDetails'
 import SurveyQuestions from './SurveyQuestions'
+import Profile from './Profile'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -35,6 +36,9 @@ import PersonIcon from '@material-ui/icons/Person';
 import EventIcon from '@material-ui/icons/Event';
 import NoteIcon from '@material-ui/icons/Note';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import DialogContentText from '@material-ui/core/DialogContentText'
+import MaterialDialog from './MaterialDialog'
+import Button from '@material-ui/core/Button';
 
 const history = createBrowserHistory();
 const drawerWidth = 240;
@@ -71,13 +75,16 @@ export default function MenuAppBar(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [title, setTitle] = React.useState(1)
     const open = Boolean(anchorEl);
+    const [show, setShow] = React.useState(false)
+    const [childProps, setChildProps] = React.useState()
+    const [profileData, setProfileData] = React.useState({})
 
     useEffect(() => {
         // dev
         switch (history.location.pathname) {
-        // produciton
-        // switch (history.location.hash) {
-        case '/':
+            // produciton
+            // switch (history.location.hash.slice(1)) {
+            case '/':
                 setTitle(1)
                 break
             case '/survey':
@@ -95,6 +102,44 @@ export default function MenuAppBar(props) {
         }
     }, [history.location])
 
+    const handleClose = () => {
+        setShow(false)
+    }
+
+    const handleMyProfile = () => {
+        setAnchorEl(null);
+        setChildProps({
+            handleClose,
+            DialogContent: <DialogContentText id="alert-dialog-description">
+                <Profile profileData={profileData} handleProfileUpdate={handleProfileUpdate} />
+            </DialogContentText>,
+            buttons: [
+                <Button onClick={handleClose} color="primary">
+                    Cancel
+                </Button>,
+                <Button onClick={handleProfileChange} color="primary" autoFocus>
+                    Save
+                </Button>],
+            dividers: true,
+            title: 'My Profile',
+            maxWidth: "lg",
+            // fullWidth: true,
+        })
+        setShow(true)
+    }
+
+    const handleProfileUpdate = (name, value) => {
+        console.log(name, value)
+        setProfileData({
+            ...profileData,
+            name: value,
+        })
+    }
+
+    const handleProfileChange = () => {
+        // console.log(values)
+    }
+
     const handleChange = (event) => {
         setAuth(event.target.checked);
     };
@@ -103,7 +148,7 @@ export default function MenuAppBar(props) {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleClose = () => {
+    const handleMenuClose = () => {
         setAnchorEl(null);
     };
 
@@ -111,9 +156,14 @@ export default function MenuAppBar(props) {
         setTitle(title);
     }
 
+    const handleLogout = () => {
+
+    }
+
     return (
         <div className={classes.root}>
             <CssBaseline />
+            <MaterialDialog open={open} {...childProps} />
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
                     <Typography variant="h6" noWrap className={classes.title}>
@@ -143,10 +193,10 @@ export default function MenuAppBar(props) {
                                     horizontal: 'right',
                                 }}
                                 open={open}
-                                onClose={handleClose}
+                                onClose={handleMenuClose}
                             >
-                                <MenuItem onClick={handleClose}>Profile</MenuItem>
-                                <MenuItem onClick={handleClose}>My account</MenuItem>
+                                <MenuItem onClick={handleMyProfile}>My Profile</MenuItem>
+                                <MenuItem onClick={handleLogout}>Logout</MenuItem>
                             </Menu>
                         </div>
                     )}

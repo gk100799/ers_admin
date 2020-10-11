@@ -30,6 +30,7 @@ function AddQuestionContent(props) {
 
     const onFinish = values => {
         console.log('Received values of form:', values);
+        props.handleEditSave(values)
     };
 
     const [vals, setVals] = useState([])
@@ -153,7 +154,7 @@ function AddQuestionContent(props) {
                                         </Form.Item>
                                     </div>
                                 ))}
-                                <Form.Item>
+                                <Form.Item style={{margin: '0px 0 0px 20px' }}>
                                     <Button
                                         color="primary"
                                         onClick={() => {
@@ -162,7 +163,7 @@ function AddQuestionContent(props) {
                                         }}
                                         style={{ width: '40%' }}
                                     >
-                                        <PlusOutlined /> Add field
+                                        <PlusOutlined style={{marginRight: "10px"}}/>   Add option
                                     </Button>
                                 </Form.Item>
                             </div>
